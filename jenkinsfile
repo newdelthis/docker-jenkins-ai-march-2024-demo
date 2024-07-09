@@ -43,7 +43,11 @@ pipeline {
                 script {
                     try {
                          withCredentials([usernamePassword(credentialsId: 'my-docker-hub-credentials-id', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                            docker.withRegistry('') {
+def registry_url = "registry-1.docker.io/v2/"
+        bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ${registry_url}"
+
+
+                            docker.withRegistry('https://registry-1.docker.io/v2/') {
                                 docker.image(DOCKER_IMAGE_NAME).push(IMAGE_TAG)
                             }
                         }
