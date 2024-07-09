@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Define environment variables for Git and DockerHub credentials
         GIT_REPOSITORY_URL = 'https://github.com/newdelthis/docker-jenkins-ai-march-2024-demo.git'
-        DOCKER_IMAGE_NAME = 'newdelthis/docker_jenkins_demo'
+        DOCKER_IMAGE_NAME = 'haajkahate/docker_jenkins_demo'
         IMAGE_TAG = '1.0' // Make sure to use string for tag
     }
     
@@ -42,7 +42,7 @@ pipeline {
                 // Log in to DockerHub and push Docker image
                 script {
                     try {
-                         withCredentials([usernamePassword(credentialsId: 'my-docker-hub-credentials-id', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')])
+                        withCredentials([usernamePassword(credentialsId: 'my-docker-hub-credentials-id', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                             docker.withRegistry('https://index.docker.io/v1/') {
                                 docker.image(DOCKER_IMAGE_NAME).push(IMAGE_TAG)
                             }
